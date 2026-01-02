@@ -48,6 +48,13 @@ function setupEventListeners() {
     document.getElementById('btn_close_settings').addEventListener('click', hideSettingsModal);
     document.getElementById('btn_close_settings_modal').addEventListener('click', hideSettingsModal);
 
+    // Export/Import
+    document.getElementById('btn_export_data').addEventListener('click', exportAllData);
+    document.getElementById('btn_import_data').addEventListener('click', () => {
+        document.getElementById('import_file_input').click();
+    });
+    document.getElementById('import_file_input').addEventListener('change', handleImportFile);
+
     // Close modals on overlay click
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
@@ -385,4 +392,121 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+// ========================================
+// EXPORT/IMPORT FUNCTIONS
+// ========================================
+
+// Export all data as JSON file
+async function exportAllData() {
+    try {
+        const data = await loadData();
+
+        // Create export object with metadata
+        const exportData = {
+            version: '1.0.0',
+            exportDate: new Date().toISOString(),
+            data: data
+        };
+
+        // Convert to JSON string
+        const jsonString = JSON.stringify(exportData, null, 2);
+
+        // Create blob and download
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `quick-notes-backup-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        // Show success message
+        const successEl = document.getElementById('import_success');
+        successEl.textContent = 'Data exported successfully!';
+        successEl.style.display = 'block';
+        setTimeout(() => {
+            successEl.style.display = 'none';
+        }, 3000);
+
+    } catch (error) {
+        console.error('Export error:', error);
+        alert('Failed to export data: ' + error.message);
+    }
+}
+
+// Handle file selection for import
+async function handleImportFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const errorEl = document.getElementById('import_error');
+    const successEl = document.getElementById('import_success');
+    errorEl.textContent = '';
+    successEl.style.display = 'none';
+
+    try {
+        // Read file
+        const text = await file.text();
+        const importData = JSON.parse(text);
+
+        // Validate structure
+        if (!importData.data) {
+            throw new Error('Invalid backup file format');
+        }
+
+        const data = importData.data;
+
+        // Validate required fields
+        if (!data.categories || !Array.isArray(data.categories)) {
+            throw new Error('Invalid categories data');
+        }
+
+        if (!data.cards || !Array.isArray(data.cards)) {
+            throw new Error('Invalid cards data');
+        }
+
+        if (!data.settings || typeof data.settings !== 'object') {
+            throw new Error('Invalid settings data');
+        }
+
+        // Confirm before overwriting
+        const categoryCount = data.categories.length;
+        const cardCount = data.cards.length;
+        const confirmMsg = `Import ${categoryCount} categories and ${cardCount} cards?\n\nThis will replace all existing data!`;
+
+        if (!confirm(confirmMsg)) {
+            event.target.value = ''; // Reset file input
+            return;
+        }
+
+        // Import data
+        await saveData(data);
+
+        // Reload UI
+        currentCategoryId = data.activeCategory;
+        await renderCategories();
+        await renderCards(currentCategoryId);
+
+        // Reload theme
+        await initTheme();
+
+        // Show success
+        successEl.textContent = `Successfully imported ${categoryCount} categories and ${cardCount} cards!`;
+        successEl.style.display = 'block';
+        setTimeout(() => {
+            successEl.style.display = 'none';
+            hideSettingsModal();
+        }, 2000);
+
+    } catch (error) {
+        console.error('Import error:', error);
+        errorEl.textContent = 'Import failed: ' + error.message;
+    }
+
+    // Reset file input
+    event.target.value = '';
 }

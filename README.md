@@ -11,6 +11,7 @@ A beautiful Chrome extension for organizing and accessing your favorite URLs wit
 - ✅ **One-Click Access**: Click any card to open the URL in a new tab
 - ✅ **Persistent Storage**: All data saved locally using Chrome Storage API
 - ✅ **Full CRUD Operations**: Add, edit, and delete categories and cards
+- ✅ **Export/Import**: Backup and share your notes with others via JSON files
 - ✅ **Lightweight**: No heavy frameworks - pure vanilla JavaScript and CSS
 
 ## Installation
@@ -48,6 +49,23 @@ A beautiful Chrome extension for organizing and accessing your favorite URLs wit
 - Click the settings icon (⚙) in the header
 - Choose from 6 beautiful themes
 - Settings are saved automatically
+
+### Export/Import (Share with Others)
+
+**Export Your Notes:**
+1. Click the settings icon (⚙)
+2. Click "Export All" button
+3. A JSON file will be downloaded (e.g., `quick-notes-backup-2026-01-03.json`)
+4. Share this file with others via email, cloud storage, etc.
+
+**Import Notes from Others:**
+1. Click the settings icon (⚙)
+2. Click "Import" button
+3. Select a JSON backup file
+4. Confirm the import (this will replace all current data)
+5. Your notes will be restored from the backup
+
+**Note:** Import will completely replace your existing data. Export your current notes first if you want to keep them!
 
 ## Project Structure
 
@@ -98,6 +116,12 @@ All data is stored locally using Chrome Storage API:
 
 ## Version
 
+**v1.1.0** - Export/Import Feature
+- Added export/import functionality to backup and share notes
+- Export all categories and cards to JSON file
+- Import data from backup files
+- Validation and confirmation on import
+
 **v1.0.0** - Initial Release
 
 ## Technologies Used
@@ -111,11 +135,11 @@ All data is stored locally using Chrome Storage API:
 ## Future Enhancements (v2.0)
 
 - Search and filter cards
-- Import/Export functionality
 - Drag-and-drop reordering
 - Keyboard shortcuts
 - Favicon display for URLs
 - Bulk operations
+- Category-specific export
 
 ## License
 

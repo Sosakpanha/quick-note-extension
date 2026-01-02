@@ -1,6 +1,6 @@
 {
   "name": "Quick Note Extension",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "manifest_version": 3,
   "description": "Organize and access your favorite URLs with categories and tags",
   "icons": {
