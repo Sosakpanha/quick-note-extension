@@ -1,0 +1,584 @@
+/* Themes for Quick Note Extension */
+
+/* ============================================
+   DARK THEME
+   ============================================ */
+body.dark-theme {
+    background: linear-gradient(135deg, #1a1a2e 0%, #252542 100%);
+    color: #e0e0e0;
+}
+
+body.dark-theme .header {
+    background: linear-gradient(90deg, #252542 0%, #2a2a50 100%);
+    border-bottom-color: #3a3a5e;
+}
+
+body.dark-theme .app-title {
+    color: #e0e0e0;
+}
+
+body.dark-theme .btn-settings {
+    color: #999;
+}
+
+body.dark-theme .btn-settings:hover {
+    color: #e91e63;
+    background: rgba(233, 30, 99, 0.1);
+}
+
+body.dark-theme .side-nav {
+    background: linear-gradient(180deg, #252542 0%, #2a2a4e 100%);
+    border-right-color: #3a3a5e;
+}
+
+body.dark-theme .category-item {
+    color: #b0b0b0;
+}
+
+body.dark-theme .category-item:hover {
+    background: rgba(233, 30, 99, 0.1);
+}
+
+body.dark-theme .cards-container {
+    background: #1a1a2e;
+}
+
+body.dark-theme .category-title {
+    color: #e0e0e0;
+}
+
+body.dark-theme .url-card {
+    background: linear-gradient(135deg, #252542 0%, #2a2a4e 100%);
+    border-color: #3a3a5e;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .card-title {
+    color: #e0e0e0;
+}
+
+body.dark-theme .card-url {
+    color: #f06292;
+}
+
+body.dark-theme .tag {
+    background: linear-gradient(135deg, #3a3a5e 0%, #4a4a6e 100%);
+    color: #b0b0b0;
+}
+
+body.dark-theme .add-card-btn {
+    border-color: #3a3a5e;
+    color: #666;
+}
+
+body.dark-theme .add-card-btn:hover {
+    border-color: #e91e63;
+    background: rgba(233, 30, 99, 0.05);
+    color: #e91e63;
+}
+
+body.dark-theme .empty-state {
+    color: #666;
+}
+
+body.dark-theme .modal-container {
+    background: linear-gradient(135deg, #252542 0%, #2a2a4e 100%);
+}
+
+body.dark-theme .modal-header {
+    border-bottom-color: #3a3a5e;
+}
+
+body.dark-theme .modal-title {
+    color: #e0e0e0;
+}
+
+body.dark-theme .modal-close {
+    color: #999;
+}
+
+body.dark-theme .modal-close:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #e0e0e0;
+}
+
+body.dark-theme .label-text-premium {
+    color: #b0b0b0;
+}
+
+body.dark-theme .input-premium {
+    background: #1a1a2e !important;
+    border-color: #3a3a5e !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-theme .input-premium:focus {
+    border-color: #e91e63 !important;
+}
+
+body.dark-theme .btn-secondary-mars {
+    background: #3a3a5e;
+    color: #e0e0e0;
+}
+
+body.dark-theme .btn-secondary-mars:hover {
+    background: #4a4a6e;
+}
+
+body.dark-theme .btn-edit,
+body.dark-theme .btn-delete,
+body.dark-theme .btn-edit-card,
+body.dark-theme .btn-delete-card {
+    background: rgba(255, 255, 255, 0.05);
+    color: #b0b0b0;
+}
+
+body.dark-theme .btn-add-category {
+    border-color: #3a3a5e;
+    color: #999;
+}
+
+body.dark-theme .btn-add-category:hover {
+    border-color: #e91e63;
+    color: #e91e63;
+}
+
+/* ============================================
+   OCEAN THEME
+   ============================================ */
+body.ocean-theme {
+    background: linear-gradient(135deg, #0E1D21 0%, #122E34 100%);
+    color: #ABAFB5;
+}
+
+body.ocean-theme .header {
+    background: linear-gradient(90deg, #122E34 0%, #1a3a44 100%);
+    border-bottom-color: #677E8A;
+}
+
+body.ocean-theme .app-title {
+    color: #E0B4B2;
+}
+
+body.ocean-theme .btn-settings {
+    color: #677E8A;
+}
+
+body.ocean-theme .btn-settings:hover {
+    color: #E0B4B2;
+    background: rgba(224, 180, 178, 0.1);
+}
+
+body.ocean-theme .side-nav {
+    background: linear-gradient(180deg, #122E34 0%, #1a3a44 100%);
+    border-right-color: #677E8A;
+}
+
+body.ocean-theme .category-item {
+    color: #ABAFB5;
+}
+
+body.ocean-theme .category-item:hover {
+    background: rgba(224, 180, 178, 0.1);
+}
+
+body.ocean-theme .category-item.category-active {
+    background: linear-gradient(135deg, #622347 0%, #E0B4B2 100%);
+}
+
+body.ocean-theme .cards-container {
+    background: #0E1D21;
+}
+
+body.ocean-theme .category-title {
+    color: #E0B4B2;
+}
+
+body.ocean-theme .url-card {
+    background: linear-gradient(135deg, #122E34 0%, #1a3a44 100%);
+    border-color: #677E8A;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+body.ocean-theme .card-title {
+    color: #E0B4B2;
+}
+
+body.ocean-theme .card-url {
+    color: #ABAFB5;
+}
+
+body.ocean-theme .tag {
+    background: linear-gradient(135deg, #677E8A 0%, #7a8e9a 100%);
+    color: #0E1D21;
+}
+
+body.ocean-theme .add-card-btn {
+    border-color: #677E8A;
+    color: #677E8A;
+}
+
+body.ocean-theme .add-card-btn:hover {
+    border-color: #E0B4B2;
+    background: rgba(224, 180, 178, 0.1);
+    color: #E0B4B2;
+}
+
+body.ocean-theme .modal-container {
+    background: linear-gradient(135deg, #122E34 0%, #1a3a44 100%);
+}
+
+body.ocean-theme .modal-header {
+    border-bottom-color: #677E8A;
+}
+
+body.ocean-theme .modal-title {
+    color: #E0B4B2;
+}
+
+body.ocean-theme .label-text-premium {
+    color: #ABAFB5;
+}
+
+body.ocean-theme .input-premium {
+    background: #0E1D21 !important;
+    border-color: #677E8A !important;
+    color: #E0B4B2 !important;
+}
+
+body.ocean-theme .input-premium:focus {
+    border-color: #E0B4B2 !important;
+}
+
+body.ocean-theme .btn-secondary-mars {
+    background: #677E8A;
+    color: #0E1D21;
+}
+
+body.ocean-theme .btn-secondary-mars:hover {
+    background: #ABAFB5;
+}
+
+body.ocean-theme .btn-add-category {
+    border-color: #677E8A;
+    color: #677E8A;
+}
+
+body.ocean-theme .btn-add-category:hover {
+    border-color: #E0B4B2;
+    color: #E0B4B2;
+}
+
+/* ============================================
+   BROWN THEME
+   ============================================ */
+body.brown-theme {
+    background: linear-gradient(135deg, #241705 0%, #3A2610 100%);
+    color: #D4A574;
+}
+
+body.brown-theme .header {
+    background: linear-gradient(90deg, #3A2610 0%, #4a3520 100%);
+    border-bottom-color: #5A3A1A;
+}
+
+body.brown-theme .app-title {
+    color: #F09410;
+}
+
+body.brown-theme .btn-settings {
+    color: #BC430D;
+}
+
+body.brown-theme .btn-settings:hover {
+    color: #F09410;
+    background: rgba(240, 148, 16, 0.1);
+}
+
+body.brown-theme .side-nav {
+    background: linear-gradient(180deg, #3A2610 0%, #4a3520 100%);
+    border-right-color: #5A3A1A;
+}
+
+body.brown-theme .category-item {
+    color: #D4A574;
+}
+
+body.brown-theme .category-item:hover {
+    background: rgba(240, 148, 16, 0.1);
+}
+
+body.brown-theme .category-item.category-active {
+    background: linear-gradient(135deg, #F09410 0%, #BC430D 100%);
+}
+
+body.brown-theme .cards-container {
+    background: #241705;
+}
+
+body.brown-theme .category-title {
+    color: #F09410;
+}
+
+body.brown-theme .url-card {
+    background: linear-gradient(135deg, #3A2610 0%, #4a3520 100%);
+    border-color: #5A3A1A;
+}
+
+body.brown-theme .card-title {
+    color: #F09410;
+}
+
+body.brown-theme .card-url {
+    color: #D4A574;
+}
+
+body.brown-theme .tag {
+    background: linear-gradient(135deg, #5A3A1A 0%, #6a4a2a 100%);
+    color: #D4A574;
+}
+
+body.brown-theme .modal-container {
+    background: linear-gradient(135deg, #3A2610 0%, #4a3520 100%);
+}
+
+body.brown-theme .modal-header {
+    border-bottom-color: #5A3A1A;
+}
+
+body.brown-theme .modal-title {
+    color: #F09410;
+}
+
+body.brown-theme .label-text-premium {
+    color: #D4A574;
+}
+
+body.brown-theme .input-premium {
+    background: #241705 !important;
+    border-color: #5A3A1A !important;
+    color: #F09410 !important;
+}
+
+body.brown-theme .input-premium:focus {
+    border-color: #F09410 !important;
+}
+
+body.brown-theme .btn-secondary-mars {
+    background: #5A3A1A;
+    color: #D4A574;
+}
+
+body.brown-theme .btn-secondary-mars:hover {
+    background: #6A4A2A;
+}
+
+/* ============================================
+   FROST THEME
+   ============================================ */
+body.frost-theme {
+    background: linear-gradient(135deg, #153A50 0%, #1E4A62 100%);
+    color: #AAD0E2;
+}
+
+body.frost-theme .header {
+    background: linear-gradient(90deg, #1E4A62 0%, #2a5a72 100%);
+    border-bottom-color: #5B8094;
+}
+
+body.frost-theme .app-title {
+    color: #87B1C8;
+}
+
+body.frost-theme .btn-settings {
+    color: #5B8094;
+}
+
+body.frost-theme .btn-settings:hover {
+    color: #87B1C8;
+    background: rgba(135, 177, 200, 0.1);
+}
+
+body.frost-theme .side-nav {
+    background: linear-gradient(180deg, #1E4A62 0%, #2a5a72 100%);
+    border-right-color: #5B8094;
+}
+
+body.frost-theme .category-item {
+    color: #AAD0E2;
+}
+
+body.frost-theme .category-item:hover {
+    background: rgba(135, 177, 200, 0.1);
+}
+
+body.frost-theme .category-item.category-active {
+    background: linear-gradient(135deg, #87B1C8 0%, #AAD0E2 100%);
+    color: #153A50;
+}
+
+body.frost-theme .cards-container {
+    background: #153A50;
+}
+
+body.frost-theme .category-title {
+    color: #87B1C8;
+}
+
+body.frost-theme .url-card {
+    background: linear-gradient(135deg, #1E4A62 0%, #2a5a72 100%);
+    border-color: #5B8094;
+}
+
+body.frost-theme .card-title {
+    color: #87B1C8;
+}
+
+body.frost-theme .card-url {
+    color: #AAD0E2;
+}
+
+body.frost-theme .tag {
+    background: linear-gradient(135deg, #5B8094 0%, #6b90a4 100%);
+    color: #E8F4F8;
+}
+
+body.frost-theme .modal-container {
+    background: linear-gradient(135deg, #1E4A62 0%, #2a5a72 100%);
+}
+
+body.frost-theme .modal-header {
+    border-bottom-color: #5B8094;
+}
+
+body.frost-theme .modal-title {
+    color: #87B1C8;
+}
+
+body.frost-theme .label-text-premium {
+    color: #AAD0E2;
+}
+
+body.frost-theme .input-premium {
+    background: #153A50 !important;
+    border-color: #5B8094 !important;
+    color: #AAD0E2 !important;
+}
+
+body.frost-theme .input-premium:focus {
+    border-color: #87B1C8 !important;
+}
+
+body.frost-theme .btn-secondary-mars {
+    background: #5B8094;
+    color: #E8F4F8;
+}
+
+body.frost-theme .btn-secondary-mars:hover {
+    background: #6B90A4;
+}
+
+/* ============================================
+   NIGHT THEME
+   ============================================ */
+body.night-theme {
+    background: linear-gradient(135deg, #28293D 0%, #36374F 100%);
+    color: #9997BC;
+}
+
+body.night-theme .header {
+    background: linear-gradient(90deg, #36374F 0%, #44455f 100%);
+    border-bottom-color: #555184;
+}
+
+body.night-theme .app-title {
+    color: #9997BC;
+}
+
+body.night-theme .btn-settings {
+    color: #555184;
+}
+
+body.night-theme .btn-settings:hover {
+    color: #9997BC;
+    background: rgba(153, 151, 188, 0.1);
+}
+
+body.night-theme .side-nav {
+    background: linear-gradient(180deg, #36374F 0%, #44455f 100%);
+    border-right-color: #555184;
+}
+
+body.night-theme .category-item {
+    color: #9997BC;
+}
+
+body.night-theme .category-item:hover {
+    background: rgba(153, 151, 188, 0.1);
+}
+
+body.night-theme .category-item.category-active {
+    background: linear-gradient(135deg, #555184 0%, #9997BC 100%);
+    color: white;
+}
+
+body.night-theme .cards-container {
+    background: #28293D;
+}
+
+body.night-theme .category-title {
+    color: #9997BC;
+}
+
+body.night-theme .url-card {
+    background: linear-gradient(135deg, #36374F 0%, #44455f 100%);
+    border-color: #555184;
+}
+
+body.night-theme .card-title {
+    color: #9997BC;
+}
+
+body.night-theme .card-url {
+    color: #B5B3D4;
+}
+
+body.night-theme .tag {
+    background: linear-gradient(135deg, #555184 0%, #656594 100%);
+    color: #E8E8F0;
+}
+
+body.night-theme .modal-container {
+    background: linear-gradient(135deg, #36374F 0%, #44455f 100%);
+}
+
+body.night-theme .modal-header {
+    border-bottom-color: #555184;
+}
+
+body.night-theme .modal-title {
+    color: #9997BC;
+}
+
+body.night-theme .label-text-premium {
+    color: #9997BC;
+}
+
+body.night-theme .input-premium {
+    background: #28293D !important;
+    border-color: #555184 !important;
+    color: #9997BC !important;
+}
+
+body.night-theme .input-premium:focus {
+    border-color: #9997BC !important;
+}
+
+body.night-theme .btn-secondary-mars {
+    background: #555184;
+    color: #E8E8F0;
+}
+
+body.night-theme .btn-secondary-mars:hover {
+    background: #656594;
+}
