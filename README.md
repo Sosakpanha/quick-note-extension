@@ -11,7 +11,7 @@ A beautiful Chrome extension for organizing and accessing your favorite URLs wit
 - ✅ **One-Click Access**: Click any card to open the URL in a new tab
 - ✅ **Persistent Storage**: All data saved locally using Chrome Storage API
 - ✅ **Full CRUD Operations**: Add, edit, and delete categories and cards
-- ✅ **Export/Import**: Backup and share your notes with others via JSON files
+- ✅ **Export/Import**: Backup and share your notes with others via JSON files (supports drag & drop)
 - ✅ **Lightweight**: No heavy frameworks - pure vanilla JavaScript and CSS
 
 ## Installation
@@ -60,12 +60,14 @@ A beautiful Chrome extension for organizing and accessing your favorite URLs wit
 
 **Import Notes from Others:**
 1. Click the settings icon (⚙)
-2. Click "Import" button
-3. Select a JSON backup file
-4. Confirm the import (this will replace all current data)
-5. Your notes will be restored from the backup
+2. Either:
+   - Click "Import" button and select a JSON file, OR
+   - Drag & drop a JSON file onto the drop zone
+3. Review any duplicate URLs detected
+4. Confirm the import (new notes will be added to existing data)
+5. The imported notes will appear in your extension
 
-**Note:** Import will completely replace your existing data. Export your current notes first if you want to keep them!
+**Note:** Import will add new notes to your existing data. If duplicate URLs are found, you'll be notified before confirming.
 
 ## Project Structure
 
@@ -118,9 +120,11 @@ All data is stored locally using Chrome Storage API:
 
 **v1.1.0** - Export/Import Feature
 - Added export/import functionality to backup and share notes
-- Export all categories and cards to JSON file
-- Import data from backup files
-- Validation and confirmation on import
+- Export all categories and cards to JSON file (cleaned format)
+- Import adds new notes instead of replacing
+- Drag & drop support for importing JSON files
+- Duplicate URL detection with confirmation
+- Validation and error handling
 
 **v1.0.0** - Initial Release
 

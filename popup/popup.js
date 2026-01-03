@@ -55,6 +55,42 @@ function setupEventListeners() {
     });
     document.getElementById('import_file_input').addEventListener('change', handleImportFile);
 
+    // Drag & Drop
+    const dropZone = document.getElementById('drop_zone');
+
+    dropZone.addEventListener('click', () => {
+        document.getElementById('import_file_input').click();
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add('drag-over');
+    });
+
+    dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('drag-over');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('drag-over');
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            const file = files[0];
+            if (file.type === 'application/json' || file.name.endsWith('.json')) {
+                handleImportFileFromDrop(file);
+            } else {
+                const errorEl = document.getElementById('import_error');
+                errorEl.textContent = 'Please drop a valid JSON file';
+            }
+        }
+    });
+
     // Close modals on overlay click
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
@@ -403,11 +439,30 @@ async function exportAllData() {
     try {
         const data = await loadData();
 
+        // Clean up data - remove unnecessary fields
+        const cleanedCategories = data.categories.map(cat => ({
+            id: cat.id,
+            name: cat.name
+        }));
+
+        const cleanedCards = data.cards.map(card => ({
+            id: card.id,
+            categoryId: card.categoryId,
+            title: card.title,
+            url: card.url
+        }));
+
+        const cleanedData = {
+            categories: cleanedCategories,
+            cards: cleanedCards,
+            settings: data.settings
+        };
+
         // Create export object with metadata
         const exportData = {
-            version: '1.0.0',
+            version: '1.1.0',
             exportDate: new Date().toISOString(),
-            data: data
+            data: cleanedData
         };
 
         // Convert to JSON string
@@ -442,7 +497,17 @@ async function exportAllData() {
 async function handleImportFile(event) {
     const file = event.target.files[0];
     if (!file) return;
+    await processImportFile(file);
+    event.target.value = ''; // Reset file input
+}
 
+// Handle drag & drop import
+async function handleImportFileFromDrop(file) {
+    await processImportFile(file);
+}
+
+// Process import file (shared logic for both file input and drag & drop)
+async function processImportFile(file) {
     const errorEl = document.getElementById('import_error');
     const successEl = document.getElementById('import_success');
     errorEl.textContent = '';
@@ -458,44 +523,96 @@ async function handleImportFile(event) {
             throw new Error('Invalid backup file format');
         }
 
-        const data = importData.data;
+        const newData = importData.data;
 
         // Validate required fields
-        if (!data.categories || !Array.isArray(data.categories)) {
+        if (!newData.categories || !Array.isArray(newData.categories)) {
             throw new Error('Invalid categories data');
         }
 
-        if (!data.cards || !Array.isArray(data.cards)) {
+        if (!newData.cards || !Array.isArray(newData.cards)) {
             throw new Error('Invalid cards data');
         }
 
-        if (!data.settings || typeof data.settings !== 'object') {
-            throw new Error('Invalid settings data');
-        }
+        // Load existing data
+        const existingData = await loadData();
+        const existingCards = existingData.cards || [];
+        const existingCategories = existingData.categories || [];
 
-        // Confirm before overwriting
-        const categoryCount = data.categories.length;
-        const cardCount = data.cards.length;
-        const confirmMsg = `Import ${categoryCount} categories and ${cardCount} cards?\n\nThis will replace all existing data!`;
+        // Check for duplicate URLs
+        const existingUrls = new Set(existingCards.map(card => card.url.toLowerCase()));
+        const duplicates = newData.cards.filter(card =>
+            existingUrls.has(card.url.toLowerCase())
+        );
+
+        // Show duplicates and confirm
+        let confirmMsg = `Import ${newData.categories.length} categories and ${newData.cards.length} cards?\n\n`;
+
+        if (duplicates.length > 0) {
+            confirmMsg += `⚠️ Found ${duplicates.length} duplicate URL(s):\n`;
+            duplicates.slice(0, 5).forEach(card => {
+                confirmMsg += `• ${card.title} (${card.url})\n`;
+            });
+            if (duplicates.length > 5) {
+                confirmMsg += `... and ${duplicates.length - 5} more\n`;
+            }
+            confirmMsg += '\nContinue importing (duplicates will be added)?';
+        }
 
         if (!confirm(confirmMsg)) {
             event.target.value = ''; // Reset file input
             return;
         }
 
-        // Import data
-        await saveData(data);
+        // Generate unique IDs for new data to avoid conflicts
+        const timestamp = Date.now();
+        const categoryIdMap = new Map();
+
+        // Map new categories with unique IDs
+        const newCategories = newData.categories.map((cat, index) => {
+            const newId = `cat_${timestamp}_${index}`;
+            categoryIdMap.set(cat.id, newId);
+            return {
+                id: newId,
+                name: cat.name,
+                order: existingCategories.length + index,
+                createdAt: timestamp,
+                updatedAt: timestamp
+            };
+        });
+
+        // Map new cards with updated category IDs and unique IDs
+        const newCards = newData.cards.map((card, index) => {
+            const newCategoryId = categoryIdMap.get(card.categoryId);
+            return {
+                id: `card_${timestamp}_${index}`,
+                categoryId: newCategoryId,
+                title: card.title,
+                url: card.url,
+                tags: [],
+                order: index,
+                createdAt: timestamp,
+                updatedAt: timestamp
+            };
+        });
+
+        // Merge with existing data
+        const mergedData = {
+            categories: [...existingCategories, ...newCategories],
+            cards: [...existingCards, ...newCards],
+            settings: existingData.settings,
+            activeCategory: existingData.activeCategory || newCategories[0]?.id
+        };
+
+        // Save merged data
+        await saveData(mergedData);
 
         // Reload UI
-        currentCategoryId = data.activeCategory;
         await renderCategories();
         await renderCards(currentCategoryId);
 
-        // Reload theme
-        await initTheme();
-
         // Show success
-        successEl.textContent = `Successfully imported ${categoryCount} categories and ${cardCount} cards!`;
+        successEl.textContent = `Successfully imported ${newCategories.length} categories and ${newCards.length} cards!`;
         successEl.style.display = 'block';
         setTimeout(() => {
             successEl.style.display = 'none';
@@ -506,7 +623,4 @@ async function handleImportFile(event) {
         console.error('Import error:', error);
         errorEl.textContent = 'Import failed: ' + error.message;
     }
-
-    // Reset file input
-    event.target.value = '';
 }
