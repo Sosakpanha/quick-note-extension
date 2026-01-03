@@ -148,14 +148,18 @@ async function renderCategories() {
         // Delete button
         categoryItem.querySelector('.btn-delete').addEventListener('click', async (e) => {
             e.stopPropagation();
-            if (confirm(`Delete '${category.name}' and all its cards?`)) {
+            const confirmed = await showConfirm(
+                `Delete '${category.name}' and all its cards?`,
+                'Delete Category'
+            );
+            if (confirmed) {
                 try {
                     const newActiveCategory = await deleteCategory(category.id);
                     currentCategoryId = newActiveCategory;
                     await renderCategories();
                     await renderCards(currentCategoryId);
                 } catch (error) {
-                    alert(error.message);
+                    await showAlert(error.message, 'Error');
                 }
             }
         });
@@ -244,12 +248,16 @@ function createCardElement(card) {
     // Delete button
     cardElement.querySelector('.btn-delete-card').addEventListener('click', async (e) => {
         e.stopPropagation();
-        if (confirm(`Delete '${card.title}'?`)) {
+        const confirmed = await showConfirm(
+            `Delete '${card.title}'?`,
+            'Delete Card'
+        );
+        if (confirmed) {
             try {
                 await deleteCard(card.id);
                 await renderCards(currentCategoryId);
             } catch (error) {
-                alert(error.message);
+                await showAlert(error.message, 'Error');
             }
         }
     });
@@ -430,6 +438,82 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+// Custom confirm dialog
+function showConfirm(message, title = 'Confirm Action') {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('confirm_modal');
+        const titleEl = document.getElementById('confirm_title');
+        const messageEl = document.getElementById('confirm_message');
+        const btnYes = document.getElementById('btn_confirm_yes');
+        const btnNo = document.getElementById('btn_confirm_no');
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+
+        modal.style.display = 'flex';
+
+        const handleYes = () => {
+            cleanup();
+            resolve(true);
+        };
+
+        const handleNo = () => {
+            cleanup();
+            resolve(false);
+        };
+
+        const cleanup = () => {
+            modal.style.display = 'none';
+            btnYes.removeEventListener('click', handleYes);
+            btnNo.removeEventListener('click', handleNo);
+        };
+
+        btnYes.addEventListener('click', handleYes);
+        btnNo.addEventListener('click', handleNo);
+
+        // Close on overlay click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                handleNo();
+            }
+        });
+    });
+}
+
+// Custom alert dialog
+function showAlert(message, title = 'Error') {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('alert_modal');
+        const titleEl = document.getElementById('alert_title');
+        const messageEl = document.getElementById('alert_message');
+        const btnOk = document.getElementById('btn_alert_ok');
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+
+        modal.style.display = 'flex';
+
+        const handleOk = () => {
+            cleanup();
+            resolve();
+        };
+
+        const cleanup = () => {
+            modal.style.display = 'none';
+            btnOk.removeEventListener('click', handleOk);
+        };
+
+        btnOk.addEventListener('click', handleOk);
+
+        // Close on overlay click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                handleOk();
+            }
+        });
+    });
+}
+
 // ========================================
 // EXPORT/IMPORT FUNCTIONS
 // ========================================
@@ -489,7 +573,7 @@ async function exportAllData() {
 
     } catch (error) {
         console.error('Export error:', error);
-        alert('Failed to export data: ' + error.message);
+        await showAlert('Failed to export data: ' + error.message, 'Export Error');
     }
 }
 
@@ -551,7 +635,7 @@ async function processImportFile(file) {
         if (duplicates.length > 0) {
             confirmMsg += `⚠️ Found ${duplicates.length} duplicate URL(s):\n`;
             duplicates.slice(0, 5).forEach(card => {
-                confirmMsg += `• ${card.title} (${card.url})\n`;
+                confirmMsg += `• ${card.title}\n`;
             });
             if (duplicates.length > 5) {
                 confirmMsg += `... and ${duplicates.length - 5} more\n`;
@@ -559,8 +643,8 @@ async function processImportFile(file) {
             confirmMsg += '\nContinue importing (duplicates will be added)?';
         }
 
-        if (!confirm(confirmMsg)) {
-            event.target.value = ''; // Reset file input
+        const confirmed = await showConfirm(confirmMsg, 'Import Notes');
+        if (!confirmed) {
             return;
         }
 

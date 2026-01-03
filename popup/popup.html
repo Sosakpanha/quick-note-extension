@@ -275,6 +275,51 @@
         </div>
     </div>
 
+    <!-- Confirm Modal -->
+    <div id="confirm_modal" class="modal-overlay" style="display: none;">
+        <div class="modal-container modal-confirm">
+            <div class="modal-header">
+                <div class="confirm-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                </div>
+                <h3 class="modal-title" id="confirm_title">Confirm Action</h3>
+            </div>
+            <div class="modal-body">
+                <p class="confirm-message" id="confirm_message"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-primary-mars" id="btn_confirm_yes">Confirm</button>
+                <button type="button" class="btn-secondary-mars" id="btn_confirm_no">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Modal -->
+    <div id="alert_modal" class="modal-overlay" style="display: none;">
+        <div class="modal-container modal-confirm">
+            <div class="modal-header">
+                <div class="confirm-icon alert-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                </div>
+                <h3 class="modal-title" id="alert_title">Error</h3>
+            </div>
+            <div class="modal-body">
+                <p class="confirm-message" id="alert_message"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-primary-mars" id="btn_alert_ok">OK</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="storage.js"></script>
     <script src="categories.js"></script>
